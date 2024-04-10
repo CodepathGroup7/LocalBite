@@ -1,4 +1,4 @@
-# Milestone 1 - Brainstorming App Ideas
+# Milestone 1 - Brainstorming App Ideas (Group 7)
 
 ## New App Ideas Brainstorm
 1. Housing App (For international/transfer students)
