@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/sign_up_text_restaurant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Restaurant Sign Up"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/signUpRestaurantName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:ems="15"
+        android:hint="Name"
+        android:layout_margin="10dp"
+        android:layout_below="@id/sign_up_text_restaurant"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/signUpAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:ems="15"
+        android:layout_margin="5dp"
+        android:hint="Address"
+        android:maxLines="2"
+        android:layout_below="@id/signUpRestaurantName"
+        android:layout_centerHorizontal="true"/>
+
+
+    <EditText
+        android:id="@+id/signUpRestaurantDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:ems="15"
+        android:hint="Description"
+        android:layout_margin="5dp"
+        android:maxLines="2"
+        android:layout_below="@id/signUpAddress"
+        android:layout_centerHorizontal="true"/>
+
+    <ImageButton
+        android:id="@+id/addRestaurantImageBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add_photo"
+        app:tint="@color/black"
+        android:backgroundTint="@color/white"
+        android:layout_below="@id/signUpRestaurantDescription"
+        android:layout_centerHorizontal="true"/>
+
+    <ImageView
+        android:id="@+id/addRestaurantImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addRestaurantImageBtn"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/restaurantSignUpBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/addRestaurantImageView"/>
+
+</RelativeLayout>
