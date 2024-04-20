@@ -128,13 +128,13 @@ Restaurant
 
 # Milestone 2 - Build Sprint 1 (Unit 8)
 ## GitHub Project board
-![ProjectBoard](https://wwww.github.com/CodepathGroup7/LocalBite/wireframes/ProjectBoard.png)
-
+![ProjectBoard](https://wwww.github.com/CodepathGroup7/LocalBite/blob/main/wireframes/ProjectBoard.png)
+<br>
 ## Issue cards
-![ProjectBoard](https://wwww.github.com/CodepathGroup7/LocalBite/wireframes/ProjectBoard.png)
-
-![Unit9ProjectBoard](https://wwww.github.com/CodepathGroup7/LocalBite/wireframes/Unit9ProjectBoard.png)
-
+![ProjectBoard](https://wwww.github.com/CodepathGroup7/LocalBite/blob/main/wireframes/ProjectBoard.png)
+<br>
+![Unit9ProjectBoard](https://wwww.github.com/CodepathGroup7/LocalBite/blob/main/wireframes/Unit9ProjectBoard.png)
+<br>
 ## Issues worked on this sprint
 List the issues you completed this sprint
 - [x] Login and Registration for Customers
