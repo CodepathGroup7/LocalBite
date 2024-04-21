@@ -1,32 +1,15 @@
 package com.example.localbite.data.model
 
-import android.database.Cursor
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
-
-
-enum class UserType { RESTAURANT, CUSTOMER }
-
-class UserTypeConverter{
-    @TypeConverter
-    fun fromUserType(userType: UserType): String {
-        return userType.name
-    }
-    @TypeConverter
-    fun toUserType(userType: String): UserType {
-        return UserType.valueOf(userType)
-    }
-}
-@Entity(tableName = "users")
-data class User (
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0L,
-    val name: String,
-    val email: String,
-    val password: String,
-    val phone: String,
-    @TypeConverters(UserTypeConverter::class)
-    val userType: UserType,
+data class User(
+    var id: String = "", // Firebase-generated ID
+    var name: String = "",
+    var phone: String = "",
+    var email: String = "",
+    var password: String = "",
+    var userType: UserType = UserType.CUSTOMER // Default to Customer
 )
+
+enum class UserType {
+    CUSTOMER,
+    RESTAURANT
+}

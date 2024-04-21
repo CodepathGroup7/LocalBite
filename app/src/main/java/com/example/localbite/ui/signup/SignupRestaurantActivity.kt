@@ -18,18 +18,15 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.room.Room
+import androidx.lifecycle.ViewModelProvider
 import com.example.localbite.LocalBite
 import com.example.localbite.MainActivity
 import com.example.localbite.R
-import com.example.localbite.data.database.RestaurantDatabase
-import com.example.localbite.data.database.UserDatabase
 import com.example.localbite.data.model.Restaurant
 import com.example.localbite.data.repository.RestaurantRepository
 import com.example.localbite.data.repository.UserRepository
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class SignupRestaurantActivity(private var userId: Long): Fragment() {
+class SignupRestaurantActivity(private var userId: String): Fragment() {
     private var imgUrl: String = ""
     private lateinit var viewModel: SignupViewModel
     private lateinit var userRepo: UserRepository
@@ -42,12 +39,8 @@ class SignupRestaurantActivity(private var userId: Long): Fragment() {
         val addRestaurantBtn = view.findViewById<Button>(R.id.restaurantSignUpBtn)
         val imgBtn = view.findViewById<ImageButton>(R.id.addRestaurantImageBtn)
 
-
-        val userDatabase = Room.databaseBuilder(LocalBite.instance.applicationContext, UserDatabase::class.java, "users").build()
-        val restaurantDatabase = Room.databaseBuilder(LocalBite.instance.applicationContext, RestaurantDatabase::class.java, "restaurants").build()
-        userRepo = UserRepository(userDatabase.userDao())
-        restaurantRepo = RestaurantRepository(restaurantDatabase.restaurantDao())
-        viewModel = SignupViewModel(userRepo, restaurantRepo)
+        restaurantRepo = RestaurantRepository()
+        viewModel = ViewModelProvider(this, SignupViewModelFactory(userRepo, restaurantRepo)).get(SignupViewModel::class.java)
 
         imgBtn.setOnClickListener {
             openGallery()
@@ -61,14 +54,21 @@ class SignupRestaurantActivity(private var userId: Long): Fragment() {
         return view
     }
 
-    fun createRestaurant(userId: Long) {
+    fun createRestaurant(userId: String) {
         val name = view?.findViewById<EditText>(R.id.signUpRestaurantName)
         val address = view?.findViewById<EditText>(R.id.signUpAddress)
         val description = view?.findViewById<EditText>(R.id.signUpRestaurantDescription)
 
         if (name != null && address != null && description != null) {
-            val restaurant = Restaurant(userId = userId, name = name.text.toString(), address = address.text.toString(), description = description.text.toString(), image = imgUrl)
-            viewModel.signupRestaurant(restaurant)
+            val restaurant = Restaurant(userId = userId, name = name.text.toString(), address = address.text.toString(), description = description.text.toString(), imageUrl = imgUrl)
+            viewModel.signupRestaurant(restaurant) { success, restaurantId ->
+                if (success) {
+                    Log.i("Restaurant Created:", restaurantId)
+                } else {
+                    Toast.makeText(activity, "Signup Restaurant Failed!", Toast.LENGTH_SHORT).show()
+                }
+
+            }
         }
     }
 
