@@ -11,17 +11,25 @@ import kotlinx.coroutines.launch
 
 class SignupViewModel(private var userRepository: UserRepository, private var restaurantRepository: RestaurantRepository) : ViewModel() {
 
-    fun signupUser(user: User): Long {
-        var userId: Long = 0
-        viewModelScope.launch {
-            userId = userRepository.insertUser(user)
+    // Function to sign up a new user
+    fun signupUser(user: User, password: String, onComplete: (Boolean, String) -> Unit) {
+        userRepository.addUser(user, password) { success, userId ->
+            if (success) {
+                onComplete(true, userId)
+            } else {
+                onComplete(false, "User signup failed")
+            }
         }
-        return userId
     }
 
-    fun signupRestaurant(restaurant: Restaurant) {
-        viewModelScope.launch {
-            restaurantRepository.insertRestaurant(restaurant)
+    // Function to sign up a new restaurant
+    fun signupRestaurant(restaurant: Restaurant, onComplete: (Boolean, String) -> Unit) {
+        restaurantRepository.addRestaurant(restaurant) { success, restaurantId ->
+            if (success) {
+                onComplete(true, restaurantId)
+            } else {
+                onComplete(false, "Restaurant signup failed")
+            }
         }
     }
 }

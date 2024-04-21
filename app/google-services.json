@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "123196285681",
+    "project_id": "localbite-d92b7",
+    "storage_bucket": "localbite-d92b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123196285681:android:c51b23392a3071def43f50",
+        "android_client_info": {
+          "package_name": "com.example.localbite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQDxKxDQ8g-lXUddvGH2aSXBlvTYefCc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

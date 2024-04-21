@@ -11,14 +11,9 @@ import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.room.Room
-import com.example.localbite.LocalBite
+import androidx.lifecycle.ViewModelProvider
 import com.example.localbite.MainActivity
 import com.example.localbite.R
-import com.example.localbite.data.dao.RestaurantDao
-import com.example.localbite.data.dao.UserDao
-import com.example.localbite.data.database.RestaurantDatabase
-import com.example.localbite.data.database.UserDatabase
 import com.example.localbite.data.model.User
 import com.example.localbite.data.model.UserType
 import com.example.localbite.data.repository.RestaurantRepository
@@ -30,7 +25,7 @@ class SignupUserActivity: Fragment() {
     private lateinit var viewModel: SignupViewModel
     private lateinit var userRepository: UserRepository
     private lateinit var restaurantRepository: RestaurantRepository
-    private var userId: Long = 0
+    private var userId: String = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,12 +45,10 @@ class SignupUserActivity: Fragment() {
                 userType = UserType.CUSTOMER
             }
         }
-        val appContext = LocalBite.instance.applicationContext
-        val userDatabase = Room.databaseBuilder(appContext, UserDatabase::class.java, "users").build()
-        val restaurantDatabase = Room.databaseBuilder(appContext, RestaurantDatabase::class.java, "restaurants").build()
-        userRepository = UserRepository(userDatabase.userDao())
-        restaurantRepository = RestaurantRepository(restaurantDatabase.restaurantDao())
-        viewModel = SignupViewModel(userRepository, restaurantRepository)
+
+        userRepository = UserRepository()
+        restaurantRepository = RestaurantRepository()
+        viewModel = ViewModelProvider(this, SignupViewModelFactory(userRepository, restaurantRepository)).get(SignupViewModel::class.java)
         navToRestaurantSignupBtn.setOnClickListener {
             userId = createUser()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -66,15 +59,14 @@ class SignupUserActivity: Fragment() {
 
         signupBtn.setOnClickListener {
             userId = createUser()
-            val intent = Intent(activity, MainActivity::class.java)
-            startActivity(intent)
+            Log.i("User Created: ", userId)
         }
 
         return view
     }
 
-    fun createUser(): Long {
-        var userId: Long = 0
+    fun createUser(): String {
+        var user_id: String = ""
         val username = view?.findViewById<EditText>(R.id.signUpName)
         val phone = view?.findViewById<EditText>(R.id.signUpPhoneNum)
         val email = view?.findViewById<EditText>(R.id.signUpEmail)
@@ -83,11 +75,21 @@ class SignupUserActivity: Fragment() {
 
         if (username != null && phone != null && email != null && password != null && confirmPassword != null && password.text.toString() == confirmPassword.text.toString()) {
             val user = User(name = username.text.toString(), phone = phone.text.toString(), email = email.text.toString(), password = password.text.toString(), userType = userType)
-            userId = viewModel.signupUser(user)
+            viewModel.signupUser(user, password.text.toString()) { success, userId ->
+                if (success) {
+                    user_id = userId
+                    if (userType == UserType.CUSTOMER) {
+                        val intent = Intent(activity, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                } else {
+                    Toast.makeText(activity, "Signup User Failed!", Toast.LENGTH_SHORT).show()
+                }
+            }
         } else {
             Toast.makeText(activity, "Input is invalid", Toast.LENGTH_SHORT).show()
         }
-        Log.i("User Created: ", userId.toString())
-        return userId
+        Log.i("User Created: ", user_id)
+        return user_id
     }
 }
