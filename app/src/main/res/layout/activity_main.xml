@@ -12,8 +12,17 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/manu_nav_button"
+        app:menu="@menu/menu_nav_button"
         app:layout_constraintBottom_toBottomOf="parent"
         />
+
+    <FrameLayout
+        android:id="@+id/nav_fragment_frame_layout"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        android:layout_height="0dp"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
