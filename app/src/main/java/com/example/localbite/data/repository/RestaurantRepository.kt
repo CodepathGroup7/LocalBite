@@ -7,7 +7,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 class RestaurantRepository() {
 
-    private val database: DatabaseReference = FirebaseDatabase.getInstance("https://localbite-d92b7-default-rtdb.firebaseio.com").getReference("restaurants")
+    private val database: DatabaseReference = FirebaseDatabase.getInstance("https://localbite-d92b7-default-rtdb.firebaseio.com").reference
     fun addRestaurant(restaurant: Restaurant, onComplete: (Boolean, String) -> Unit) {
         val restaurantId = database.child("restaurants").push().key ?: ""
         restaurant.id = restaurantId

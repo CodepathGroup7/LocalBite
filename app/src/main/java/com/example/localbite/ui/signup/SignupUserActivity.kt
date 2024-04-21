@@ -59,11 +59,7 @@ class SignupUserActivity: Fragment() {
 
         signupBtn.setOnClickListener {
             userId = createUser()
-            if (userId != "") {
-                val intent = Intent(activity, MainActivity::class.java)
-                startActivity(intent)
-            }
-
+            Log.i("User Created: ", userId)
         }
 
         return view
@@ -82,6 +78,10 @@ class SignupUserActivity: Fragment() {
             viewModel.signupUser(user, password.text.toString()) { success, userId ->
                 if (success) {
                     user_id = userId
+                    if (userType == UserType.CUSTOMER) {
+                        val intent = Intent(activity, MainActivity::class.java)
+                        startActivity(intent)
+                    }
                 } else {
                     Toast.makeText(activity, "Signup User Failed!", Toast.LENGTH_SHORT).show()
                 }

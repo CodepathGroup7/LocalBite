@@ -11,7 +11,7 @@ import com.google.firebase.database.ValueEventListener
 
 
 class UserRepository() {
-    private val database: DatabaseReference = FirebaseDatabase.getInstance("https://localbite-d92b7-default-rtdb.firebaseio.com").getReference("users")
+    private val database: DatabaseReference = FirebaseDatabase.getInstance("https://localbite-d92b7-default-rtdb.firebaseio.com").reference
 
     fun addUser(user: User, password: String, onComplete: (Boolean, String) -> Unit) {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(user.email, password)

@@ -6,7 +6,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 class EventRepository {
 
-    private val database: DatabaseReference = FirebaseDatabase.getInstance("https://localbite-d92b7-default-rtdb.firebaseio.com").getReference("events")
+    private val database: DatabaseReference = FirebaseDatabase.getInstance("https://localbite-d92b7-default-rtdb.firebaseio.com").reference
 
     fun addEvent(event: Event, onComplete: (Boolean, String) -> Unit) {
         val eventId = database.child("events").push().key ?: ""

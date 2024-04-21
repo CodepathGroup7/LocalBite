@@ -39,6 +39,7 @@ class SignupRestaurantActivity(private var userId: String): Fragment() {
         val addRestaurantBtn = view.findViewById<Button>(R.id.restaurantSignUpBtn)
         val imgBtn = view.findViewById<ImageButton>(R.id.addRestaurantImageBtn)
 
+        userRepo = UserRepository()
         restaurantRepo = RestaurantRepository()
         viewModel = ViewModelProvider(this, SignupViewModelFactory(userRepo, restaurantRepo)).get(SignupViewModel::class.java)
 
