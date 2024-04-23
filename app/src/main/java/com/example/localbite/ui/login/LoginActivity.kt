@@ -6,21 +6,17 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.Room
-import com.example.localbite.LocalBite
 import com.example.localbite.MainActivity
 import com.example.localbite.R
-import com.example.localbite.data.dao.UserDao
-import com.example.localbite.data.database.UserDatabase
 import com.example.localbite.data.repository.UserRepository
 import com.example.localbite.ui.signup.SignupActivity
 
 class LoginActivity: ComponentActivity() {
     private lateinit var viewModel: LoginViewModel
-    private lateinit var userDao: UserDao
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
@@ -29,26 +25,27 @@ class LoginActivity: ComponentActivity() {
         val passwordInput = findViewById<EditText>(R.id.loginPassword)
         val loginButton = findViewById<Button>(R.id.loginBtn)
         val signupText = findViewById<TextView>(R.id.signupText)
-        val database = Room.databaseBuilder(applicationContext, UserDatabase::class.java, "users").build()
-        userDao = database.userDao()
-        val repository = UserRepository(userDao)
-        val viewModelFactory = LoginViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(LoginViewModel::class.java)
 
-        viewModel.loginResult.observe(this, Observer { result ->
+        val repository = UserRepository() // Initialize FirebaseRepository
+        viewModel = ViewModelProvider(this, LoginViewModelFactory(repository)).get(LoginViewModel::class.java)
+
+        // Observe loginResult LiveData
+        viewModel.loginResult.observe(this) { result ->
             when (result) {
-                LoginViewModel.LoginResult.Success -> {
-                    // Login successful, navigate to logged-in screens
+                is LoginResult.Success -> {
+                    val userId = result.userId
+                    // Handle successful login (e.g., navigate to next screen)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
-                    finish()
                 }
-                LoginViewModel.LoginResult.Error -> {
-                    // Login failed, display error message
-                    Log.e("Login Error", "Login failed!")
+
+                is LoginResult.Error -> {
+                    val errorMessage = result.errorMessage
+                    // Display error message to the user (e.g., show toast)
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
-        })
+        }
 
         signupText.setOnClickListener {
             val intent = Intent(this, SignupActivity::class.java)
@@ -58,7 +55,7 @@ class LoginActivity: ComponentActivity() {
         loginButton.setOnClickListener {
             val email = emailInput.text.toString()
             val password = passwordInput.text.toString()
-            viewModel.login(email, password)
+            viewModel.loginUser(email, password)
         }
     }
 }
