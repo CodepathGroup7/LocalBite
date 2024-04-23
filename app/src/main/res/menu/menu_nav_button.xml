@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/homepage_nav_button"
+        android:enabled="true"
+        android:icon="@drawable/home_24px"
+        android:title="Home"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/event_list_nav_button"
+        android:enabled="true"
+        android:icon="@drawable/event_list_48px"
+        android:title="Events List"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/account_nav_button"
+        android:enabled="true"
+        android:icon="@drawable/account_circle_48px"
+        android:title="Account"
+        app:showAsAction="ifRoom" />
+
+</menu>
