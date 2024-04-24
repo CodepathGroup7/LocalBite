@@ -18,6 +18,7 @@ import com.example.localbite.data.model.User
 import com.example.localbite.data.model.UserType
 import com.example.localbite.data.repository.RestaurantRepository
 import com.example.localbite.data.repository.UserRepository
+import com.example.localbite.ui.user_nav_fragments.HomeFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class SignupUserActivity: Fragment() {

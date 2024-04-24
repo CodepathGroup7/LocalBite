@@ -13,5 +13,6 @@ buildscript {
     }
     dependencies {
         classpath("io.realm:realm-gradle-plugin:10.18.0")
+        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
     }
 }

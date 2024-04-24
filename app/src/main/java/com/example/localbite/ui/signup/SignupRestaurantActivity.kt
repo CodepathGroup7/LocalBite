@@ -25,9 +25,16 @@ import com.example.localbite.R
 import com.example.localbite.data.model.Restaurant
 import com.example.localbite.data.repository.RestaurantRepository
 import com.example.localbite.data.repository.UserRepository
+import com.google.android.gms.common.api.Status
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 
 class SignupRestaurantActivity(private var userId: String): Fragment() {
     private var imgUrl: String = ""
+    private var address: Map<String, String> = emptyMap()
     private lateinit var viewModel: SignupViewModel
     private lateinit var userRepo: UserRepository
     private lateinit var restaurantRepo: RestaurantRepository
@@ -52,16 +59,57 @@ class SignupRestaurantActivity(private var userId: String): Fragment() {
             view.context.startActivity(intent)
         }
 
+
+        // Initialize Places API
+        if (!Places.isInitialized()) {
+            Places.initialize(
+                requireContext(),
+                getString(R.string.google_maps_api_key)
+            )
+        }
+
+        // Initialize AutocompleteSupportFragment
+        val autocompleteFragment = childFragmentManager.findFragmentById(R.id.places_autocomplete_fragment) as? AutocompleteSupportFragment?
+
+        // Specify the types of place data to return
+        autocompleteFragment?.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG))
+
+        // Set the desired mode and filter for autocomplete suggestions
+        autocompleteFragment?.setHint("Search for a place")
+        autocompleteFragment?.setActivityMode(AutocompleteActivityMode.OVERLAY)
+
+        // Set up a PlaceSelectionListener to handle the selected place
+        autocompleteFragment?.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                // Handle the selected place
+                address = mapOf(
+                    "name" to place.name,
+                    "address" to place.address,
+                    "lat" to place.latLng?.latitude.toString(),
+                    "lng" to place.latLng?.longitude.toString()
+                )
+
+
+            }
+
+            override fun onError(status: Status) {
+                // Handle the error
+                Log.e("Autocomplete Error", "An error occurred: $status")
+            }
+        })
+
         return view
     }
 
+
+
     fun createRestaurant(userId: String) {
         val name = view?.findViewById<EditText>(R.id.signUpRestaurantName)
-        val address = view?.findViewById<EditText>(R.id.signUpAddress)
+        val address = address
         val description = view?.findViewById<EditText>(R.id.signUpRestaurantDescription)
 
         if (name != null && address != null && description != null) {
-            val restaurant = Restaurant(userId = userId, name = name.text.toString(), address = address.text.toString(), description = description.text.toString(), imageUrl = imgUrl)
+            val restaurant = Restaurant(userId = userId, name = name.text.toString(), address = address, description = description.text.toString(), imageUrl = imgUrl)
             viewModel.signupRestaurant(restaurant) { success, restaurantId ->
                 if (success) {
                     Log.i("Restaurant Created:", restaurantId)

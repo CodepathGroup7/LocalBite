@@ -1,4 +1,4 @@
-package com.example.localbite.ui.nav_fragments
+package com.example.localbite.ui.user_nav_fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
