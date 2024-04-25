@@ -60,4 +60,6 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         googleMap.addMarker(markerOptions)
     }
 
+
+
 }
