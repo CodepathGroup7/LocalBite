@@ -51,16 +51,10 @@ class SignupUserActivity: Fragment() {
         viewModel = ViewModelProvider(this, SignupViewModelFactory(userRepository, restaurantRepository)).get(SignupViewModel::class.java)
         navToRestaurantSignupBtn.setOnClickListener {
             userId = createUser()
-            val fragment = SignupRestaurantActivity.newInstance(userId)
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.signUpContainer, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
         }
 
         signupBtn.setOnClickListener {
             userId = createUser()
-            Log.i("User Created: ", userId)
         }
 
         return view
@@ -82,6 +76,12 @@ class SignupUserActivity: Fragment() {
                     if (userType == UserType.CUSTOMER) {
                         val intent = Intent(activity, MainActivity::class.java)
                         startActivity(intent)
+                    } else if (userType == UserType.RESTAURANT) {
+                        val fragment = SignupRestaurantActivity.newInstance(userId)
+                        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                        transaction.replace(R.id.signUpContainer, fragment)
+                        transaction.addToBackStack(null)
+                        transaction.commit()
                     }
                 } else {
                     Toast.makeText(activity, "Signup User Failed!", Toast.LENGTH_SHORT).show()
