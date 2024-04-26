@@ -45,6 +45,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.code.gson:gson:2.10") // Stringify object to string to pass intents easier
     implementation(libs.firebase.auth.ktx)
     ksp("androidx.room:room-compiler:2.5.2")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
