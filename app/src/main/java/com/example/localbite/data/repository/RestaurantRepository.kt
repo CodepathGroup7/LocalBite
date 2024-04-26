@@ -47,4 +47,24 @@ class RestaurantRepository() {
         })
     }
 
+    // Function to get restaurant by userId
+    fun getRestaurantByUserId(userId: String, callback: (Restaurant?) -> Unit) {
+        database.child("restaurants").orderByChild("userId").equalTo(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (restaurantSnapshot in snapshot.children) {
+                        val restaurant = restaurantSnapshot.getValue(Restaurant::class.java)
+                        callback(restaurant)
+                        return // Return the first restaurant found with the given userId
+                    }
+                }
+                callback(null) // No restaurant found with the given userId
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                callback(null) // Error occurred while retrieving restaurant
+            }
+        })
+    }
+
 }
