@@ -2,17 +2,16 @@ package com.example.localbite.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.localbite.MainActivity
 import com.example.localbite.R
 import com.example.localbite.data.repository.UserRepository
+import com.example.localbite.ui.user_nav_fragments.HomeFragment
 import com.example.localbite.ui.signup.SignupActivity
 
 class LoginActivity: ComponentActivity() {

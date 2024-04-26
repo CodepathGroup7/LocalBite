@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/restaurant_event_nav"
+        android:enabled="true"
+        android:icon="@drawable/event_list_48px"
+        android:title="Event List"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/restaurant_offers_nav"
+        android:enabled="true"
+        android:icon="@drawable/offers"
+        android:title="Offers List"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/restaurant_account_nav"
+        android:enabled="true"
+        android:icon="@drawable/account_circle_48px"
+        android:title="Account"
+        app:showAsAction="ifRoom" />
+
+</menu>

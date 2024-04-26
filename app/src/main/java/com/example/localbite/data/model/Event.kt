@@ -5,6 +5,7 @@ data class Event (
     var eventName: String = "",
     var restaurantName: String = "",
     var eventDate: String = "",
+    var eventTime: String = "",
     var eventSummary: String = "",
     var participantList: List<User> = emptyList()
 )
