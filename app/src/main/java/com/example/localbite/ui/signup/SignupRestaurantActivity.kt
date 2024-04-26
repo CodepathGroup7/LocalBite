@@ -32,12 +32,14 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 
-class SignupRestaurantActivity(private var userId: String): Fragment() {
+class SignupRestaurantActivity: Fragment() {
     private var imgUrl: String = ""
     private var address: Map<String, String> = emptyMap()
     private lateinit var viewModel: SignupViewModel
     private lateinit var userRepo: UserRepository
     private lateinit var restaurantRepo: RestaurantRepository
+    private lateinit var userId: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +51,8 @@ class SignupRestaurantActivity(private var userId: String): Fragment() {
         userRepo = UserRepository()
         restaurantRepo = RestaurantRepository()
         viewModel = ViewModelProvider(this, SignupViewModelFactory(userRepo, restaurantRepo)).get(SignupViewModel::class.java)
+
+        userId = arguments?.getString("userId") ?: ""
 
         imgBtn.setOnClickListener {
             openGallery()
@@ -180,5 +184,17 @@ class SignupRestaurantActivity(private var userId: String): Fragment() {
             }
         }
     }
+
+    companion object {
+        fun newInstance(userId: String): SignupRestaurantActivity {
+            val fragment = SignupRestaurantActivity()
+            val args = Bundle()
+            args.putString("userId", userId)
+            fragment.arguments = args
+            return fragment
+
+        }
+    }
+
 
 }

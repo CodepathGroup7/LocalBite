@@ -18,7 +18,6 @@ import com.example.localbite.data.model.User
 import com.example.localbite.data.model.UserType
 import com.example.localbite.data.repository.RestaurantRepository
 import com.example.localbite.data.repository.UserRepository
-import com.example.localbite.ui.user_nav_fragments.HomeFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class SignupUserActivity: Fragment() {
@@ -52,8 +51,9 @@ class SignupUserActivity: Fragment() {
         viewModel = ViewModelProvider(this, SignupViewModelFactory(userRepository, restaurantRepository)).get(SignupViewModel::class.java)
         navToRestaurantSignupBtn.setOnClickListener {
             userId = createUser()
+            val fragment = SignupRestaurantActivity.newInstance(userId)
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.signUpContainer, SignupRestaurantActivity(userId))
+            transaction.replace(R.id.signUpContainer, fragment)
             transaction.addToBackStack(null)
             transaction.commit()
         }
@@ -93,4 +93,5 @@ class SignupUserActivity: Fragment() {
         Log.i("User Created: ", user_id)
         return user_id
     }
+
 }
