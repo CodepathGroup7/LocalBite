@@ -34,7 +34,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 
 class SignupRestaurantActivity: Fragment() {
     private var imgUrl: String = ""
-    private var address: Map<String, String> = emptyMap()
+    private lateinit var address: Restaurant.Address
     private lateinit var viewModel: SignupViewModel
     private lateinit var userRepo: UserRepository
     private lateinit var restaurantRepo: RestaurantRepository
@@ -86,13 +86,12 @@ class SignupRestaurantActivity: Fragment() {
         autocompleteFragment?.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 // Handle the selected place
-                address = mapOf(
-                    "name" to place.name,
-                    "address" to place.address,
-                    "lat" to place.latLng?.latitude.toString(),
-                    "lng" to place.latLng?.longitude.toString()
+                address = Restaurant.Address(
+                    street_name = place.name,
+                    address = place.address,
+                    lat = place.latLng?.latitude.toString(),
+                    lng = place.latLng?.longitude.toString()
                 )
-
 
             }
 
@@ -112,7 +111,7 @@ class SignupRestaurantActivity: Fragment() {
         val address = address
         val description = view?.findViewById<EditText>(R.id.signUpRestaurantDescription)
 
-        if (name != null && address != null && description != null) {
+        if (name != null && description != null) {
             val restaurant = Restaurant(userId = userId, name = name.text.toString(), address = address, description = description.text.toString(), imageUrl = imgUrl)
             viewModel.signupRestaurant(restaurant) { success, restaurantId ->
                 if (success) {

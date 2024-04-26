@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="20dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:id="@+id/details_restaurant_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/celebration_48px"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/details_restaurant_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Restaurant Name"
+                android:gravity="end"
+                android:layout_marginBottom="5dp"
+                android:textSize="24sp"/>
+
+            <TextView
+                android:id="@+id/details_restaurant_address"
+                android:layout_width="1.5in"
+                android:layout_height="wrap_content"
+                android:text="Restaurant Address"
+                android:maxLines="2"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/details_restaurant_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Restaurant Description"
+        android:layout_margin="10dp"
+        android:maxLines="3"
+        android:textSize="16sp"/>
+
+    <fragment
+        android:id="@+id/details_restaurant_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="10dp"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/details_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/details_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"/>
+
+    </LinearLayout>
+</ScrollView>
