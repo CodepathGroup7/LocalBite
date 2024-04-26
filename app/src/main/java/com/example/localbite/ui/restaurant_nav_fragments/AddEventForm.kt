@@ -10,9 +10,14 @@ import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.localbite.R
 import com.example.localbite.data.model.Event
 import com.example.localbite.data.model.Restaurant
+import com.example.localbite.data.repository.EventRepository
+import com.example.localbite.data.repository.OfferRepository
+import com.example.localbite.data.repository.RestaurantRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,8 +26,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class AddEventForm: Fragment() {
-    private lateinit var database: FirebaseDatabase
-    private lateinit var eventsRef: DatabaseReference
+    private lateinit var eventRepository: EventRepository
+    private lateinit var offerRepository: OfferRepository
+    private lateinit var restaurantRepository: RestaurantRepository
+    private lateinit var viewModel: RestaurantViewModel
     private lateinit var eventNameEditText: EditText
     private lateinit var eventDescriptionEditText: EditText
     private lateinit var eventTimeEditText: EditText
@@ -31,10 +38,10 @@ class AddEventForm: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Initialize Firebase Database
-        database = FirebaseDatabase.getInstance()
-        eventsRef = database.reference.child("events")
+        eventRepository = EventRepository()
+        offerRepository = OfferRepository()
+        restaurantRepository = RestaurantRepository()
+        viewModel = ViewModelProvider(this, RestaurantViewModelFactory(eventRepository, offerRepository, restaurantRepository)).get(RestaurantViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,20 +63,12 @@ class AddEventForm: Fragment() {
         val currentUser = auth.currentUser
         val userId = currentUser?.uid
         if (userId != null) {
-            database.reference.child("users").child(userId).addListenerForSingleValueEvent(object:
-                ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        val restaurant = snapshot.getValue(Restaurant::class.java)
-                        if (restaurant != null) {
-                            restaurantName = restaurant.name
-                        }
-                    }
+            viewModel.getRestaurantByUserId(userId) {restaurant ->
+                if (restaurant != null) {
+                    restaurantName = restaurant.name
+                }
+            }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        Log.e("Database error", error.message)
-                    }
-
-            })
         }
         createEventBtn.setOnClickListener {
             addRestaurantEvent()
@@ -94,22 +93,16 @@ class AddEventForm: Fragment() {
             eventDate = "${datePicker.month}/${datePicker.dayOfMonth}/${datePicker.year}"
         )
 
-        val eventId = eventsRef.push().key ?: return // Ensure a valid key is generated
-        event.id = eventId
-        // Set the event object under the generated key
-        eventsRef.child(eventId).setValue(event)
-            .addOnSuccessListener {
-                // Event added successfully
+        viewModel.addEvent(event) { success, eventId ->
+            if (success) {
                 Toast.makeText(context, "Event added successfully", Toast.LENGTH_SHORT).show()
                 val fragmentManager = requireActivity().supportFragmentManager
                 if (fragmentManager.backStackEntryCount > 0 ) {
                     fragmentManager.popBackStackImmediate()
                 }
+            } else {
+                Toast.makeText(context, "Error Occurred: ${eventId}", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener { exception ->
-                // Handle failure
-                Toast.makeText(context, "Error Occurred: ${exception.message}", Toast.LENGTH_SHORT).show()
-
-            }
+        }
     }
 }
