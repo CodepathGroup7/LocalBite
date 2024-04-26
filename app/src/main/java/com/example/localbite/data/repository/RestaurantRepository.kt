@@ -1,9 +1,14 @@
 package com.example.localbite.data.repository
 
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import com.example.localbite.data.model.Restaurant
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class RestaurantRepository() {
 
@@ -19,6 +24,27 @@ class RestaurantRepository() {
                     onComplete(false, "Failed to add restaurant")
                 }
             }
+    }
+
+    fun getAllRestaurants(callback: (List<Restaurant>) -> Unit) {
+        val database = FirebaseDatabase.getInstance()
+        val restaurantsRef = database.getReference("restaurants")
+
+        restaurantsRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val restaurants = mutableListOf<Restaurant>()
+                for (restaurantSnapshot in snapshot.children) {
+                    val restaurant = restaurantSnapshot.getValue(Restaurant::class.java)
+                    restaurant?.let { restaurants.add(it) }
+                }
+                callback(restaurants)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(TAG, "Error getting all restaurants: $error")
+                callback(emptyList())
+            }
+        })
     }
 
 }
