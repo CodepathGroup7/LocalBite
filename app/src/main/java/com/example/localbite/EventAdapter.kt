@@ -1,5 +1,6 @@
 package com.example.localbite
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,23 +8,38 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.localbite.data.model.Event
+import com.google.gson.Gson
 
 class EventAdapter(eventModelList: List<Event>):
     RecyclerView.Adapter<EventAdapter.ViewHolder>() {
 
     private val eventModelList: List<Event>
+    val gson = Gson()
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val eventName: TextView
         val eventDesc: TextView
         val eventDate: TextView
-        val eventPic: ImageView
 
         init {
             eventName = itemView.findViewById(R.id.eventName)
             eventDesc = itemView.findViewById(R.id.eventDesc)
             eventDate = itemView.findViewById(R.id.eventDate)
-            eventPic = itemView.findViewById(R.id.eventPic)
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val context = itemView.context
+            val intent = Intent(context, EventDetails::class.java)
+
+            val event = eventModelList[adapterPosition]
+            intent.putExtra("restaurantName", event.restaurantName)
+            intent.putExtra("restaurantEventName", event.eventName)
+            intent.putExtra("date", event.eventDate)
+            intent.putExtra("eventTime", event.eventTime)
+            intent.putExtra("eventSummaryText", event.eventSummary)
+
+            context.startActivity(intent)
         }
     }
 
