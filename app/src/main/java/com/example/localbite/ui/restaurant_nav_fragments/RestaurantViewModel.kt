@@ -58,4 +58,10 @@ class RestaurantViewModel(private var eventsRepository: EventRepository, private
             callback(restaurant)
         }
     }
+
+    fun getRestaurantById(id: String, callback: (Restaurant?) -> Unit) {
+        restaurantRepository.getRestaurantById(id) { restaurant ->
+            callback(restaurant)
+        }
+    }
 }
