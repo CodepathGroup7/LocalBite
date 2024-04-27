@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/restaurantName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Restaurant"
+        android:textSize="22sp"
+        android:padding="15dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:paddingStart="20dp"
+        android:padding="10dp"
+        android:id="@+id/restaurantEventName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grand Opening!"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/restaurantName"/>
+
+    <TextView
+        android:paddingStart="20dp"
+        android:padding="10dp"
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1994-09-24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/restaurantEventName"/>
+
+    <TextView
+        android:paddingStart="20dp"
+        android:padding="10dp"
+        android:id="@+id/eventTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3:00 PM"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/date"/>
+
+    <TextView
+        android:paddingStart="20dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/eventSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Event Summary"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventTime"/>
+
+    <TextView
+        android:paddingStart="20dp"
+        android:layout_marginTop="12dp"
+        android:id="@+id/eventSummaryText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Event Summary Text, here lies a new restaurant"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/eventSummary"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

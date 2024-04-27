@@ -21,6 +21,10 @@
             android:name=".ui.login.LoginActivity"
             android:exported="true"
             android:label="@string/title_activity_login"/>
+        <activity
+            android:name=".EventDetails"
+            android:exported="true"
+            android:label="EventDetails" />
 
         <activity
             android:name=".MainActivity"

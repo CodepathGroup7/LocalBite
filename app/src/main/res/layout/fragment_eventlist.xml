@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="30dp"
     tools:context=".ui.user_nav_fragments.EventFragment">
 
-    <RelativeLayout
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/eventRec"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
 
-        <TextView
-            android:id="@+id/EventTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Events"
-            android:textSize="40sp"
-            android:layout_margin="10dp"/>
+        />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/eventRec"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="0dp"
-            android:layout_below="@id/EventTitleTextView"/>
-    </RelativeLayout>
 
-</ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
