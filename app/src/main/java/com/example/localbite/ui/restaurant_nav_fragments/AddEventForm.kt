@@ -90,7 +90,8 @@ class AddEventForm: Fragment() {
             restaurantName = restaurantName,
             eventSummary = eventDescriptionEditText.text.toString(),
             eventTime = eventTimeEditText.text.toString(),
-            eventDate = "${datePicker.month}/${datePicker.dayOfMonth}/${datePicker.year}"
+            eventDate = "${datePicker.month}/${datePicker.dayOfMonth}/${datePicker.year}",
+            //participantList = mutableListOf("Bob")
         )
 
         viewModel.addEvent(event) { success, eventId ->

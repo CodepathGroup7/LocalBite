@@ -33,6 +33,7 @@ class EventAdapter(eventModelList: List<Event>):
             val intent = Intent(context, EventDetails::class.java)
 
             val event = eventModelList[adapterPosition]
+            intent.putExtra("id", event.id)
             intent.putExtra("restaurantName", event.restaurantName)
             intent.putExtra("restaurantEventName", event.eventName)
             intent.putExtra("date", event.eventDate)
@@ -56,7 +57,6 @@ class EventAdapter(eventModelList: List<Event>):
         holder.eventName.text = model.eventName
         holder.eventDesc.text = model.eventSummary
         holder.eventDate.text = model.eventDate
-
     }
 
     override fun getItemCount(): Int {

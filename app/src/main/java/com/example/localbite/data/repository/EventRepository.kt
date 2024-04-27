@@ -1,7 +1,10 @@
 package com.example.localbite.data.repository
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.example.localbite.data.model.Event
+import com.example.localbite.data.model.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -26,6 +29,22 @@ class EventRepository {
                 }
             }
     }
+
+    fun addUserToEvent(eventID: String, newUser: String, onComplete: (Boolean, String) -> Unit) {
+        val eventRef = database.child("events").child(eventID)
+
+        val newParticipantRef = eventRef.child("participantList").push()
+        newParticipantRef.setValue(newUser)
+            .addOnCompleteListener { task -> // Set the new participant data
+                if (task.isSuccessful) {
+                    onComplete(true, "Participant added successfully")
+                } else {
+                    onComplete(false, "Failed to add participant: ${task.exception}")
+                }
+            }
+    }
+
+
 
     fun getEventById(id: String, callback: (Event?) -> Unit) {
         val database = FirebaseDatabase.getInstance()

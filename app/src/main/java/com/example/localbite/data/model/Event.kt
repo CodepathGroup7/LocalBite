@@ -1,5 +1,7 @@
 package com.example.localbite.data.model
 
+import android.os.Parcelable
+
 data class Event (
     var id: String = "",
     var eventName: String = "",
@@ -7,5 +9,5 @@ data class Event (
     var eventDate: String = "",
     var eventTime: String = "",
     var eventSummary: String = "",
-    var participantList: List<User> = emptyList()
+    var participantList: MutableList<String> = mutableListOf()
 )
