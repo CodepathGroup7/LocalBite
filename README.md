@@ -142,3 +142,21 @@ List the issues you completed this sprint
 
 ### Demo GIF
 ![ProjectBoard](https://github.com/CodepathGroup7/LocalBite/blob/main/DemoGif/LocalBite_Login_and_Registration.gif)
+
+# Milestone 3 - Build Sprint 2 (Unit 9)
+## GitHub Project board
+[Add screenshot of your Project Board with the updated status of issues for Milestone 3. Note that these should include the updated issues you worked on for this sprint and not be a duplicate of Milestone 2 Project board.] 
+
+## Completed user stories
+List the stories you completed this sprint
+- [x] Restaurants are shown as markers in the Map View
+- [x] Creating & Displaying Offers on both the Customer and Restaurant side
+- [x] Creating & Displaying Events on both the Customer and Restaurant side
+- [x] Registering for an event through Customer login
+
+List the stories that you will complete in the next sprint
+- [x] Push Notifications when any event or offer is published
+[Add video/gif of your current application that shows build progress] 
+
+## App Demo Video
+Embed the YouTube/Vimeo link of your Completed Demo Day prep video
