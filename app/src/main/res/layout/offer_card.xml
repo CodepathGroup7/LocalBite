@@ -14,11 +14,11 @@
     <RelativeLayout
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         >
 
         <TextView
-            android:id="@+id/eventName"
+            android:id="@+id/offerTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -30,31 +30,63 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/eventDesc"
+            android:id="@+id/offerDesc"
             android:layout_width="1.5in"
             android:layout_height="wrap_content"
-            android:maxLines="2"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:text="We welcome you to our grand opening!"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:layout_below="@id/eventName"/>
+            android:layout_below="@id/offerTitle"/>
 
         <TextView
-            android:id="@+id/eventDate"
+            android:id="@+id/offerStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:drawablePadding="2dp"
-            android:layout_below="@id/eventDesc"
+            android:layout_below="@id/offerDesc"
             android:text="Date: 4/20/2024" />
 
+        <TextView
+            android:id="@+id/offerEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:drawablePadding="2dp"
+            android:layout_below="@id/offerStartDate"
+            android:text="Date: 4/27/2024" />
+
+        <TextView
+            android:id="@+id/offerAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:drawablePadding="2dp"
+            android:layout_below="@id/offerEndDate"
+            android:text="20% off" />
+
+        <TextView
+            android:id="@+id/offerCouponCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:drawablePadding="2dp"
+            android:layout_below="@id/offerAmount"
+            android:text="WELCOME20" />
+
         <ImageView
-            android:id="@+id/eventPic"
+            android:id="@+id/offerPic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

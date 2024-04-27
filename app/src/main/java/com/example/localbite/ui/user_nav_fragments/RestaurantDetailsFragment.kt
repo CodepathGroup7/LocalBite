@@ -2,6 +2,7 @@ package com.example.localbite.ui.user_nav_fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.localbite.R
+import com.example.localbite.data.model.Restaurant
 import com.example.localbite.data.repository.EventRepository
 import com.example.localbite.data.repository.RestaurantRepository
+import com.example.localbite.data.repository.UserRepository
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -27,20 +30,32 @@ class RestaurantDetailsFragment(private val restaurantId: String): Fragment(), O
     private lateinit var viewModel: CustomerViewModel
     private lateinit var restaurantRepository: RestaurantRepository
     private lateinit var eventRepository: EventRepository
+    private lateinit var userRepository: UserRepository
+    private lateinit var currentRestaurantName: String
     private lateinit var fragmentPageAdapter: RestaurantDetailsFragmentPageAdapter
-
+    private lateinit var restaurantName: TextView
+    private lateinit var restaurantAddress: TextView
+    private lateinit var restaurantDescription: TextView
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         restaurantRepository = RestaurantRepository()
         eventRepository = EventRepository()
-        viewModel = CustomerViewModel(restaurantRepository, eventRepository)
-        fragmentPageAdapter = RestaurantDetailsFragmentPageAdapter(requireActivity().supportFragmentManager, lifecycle)
+        userRepository = UserRepository()
+        viewModel = CustomerViewModel(restaurantRepository, eventRepository, userRepository)
+        fragmentPageAdapter = RestaurantDetailsFragmentPageAdapter(
+            requireActivity().supportFragmentManager,
+            lifecycle
+        )
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -51,22 +66,25 @@ class RestaurantDetailsFragment(private val restaurantId: String): Fragment(), O
         val view = inflater.inflate(R.layout.fragment_restaurant_details, container, false)
         val mapFragment = childFragmentManager.findFragmentById(R.id.details_restaurant_map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        val restaurantName = view.findViewById<TextView>(R.id.details_restaurant_name)
-        val restaurantAddress = view.findViewById<TextView>(R.id.details_restaurant_address)
-        val restaurantDescription = view.findViewById<TextView>(R.id.details_restaurant_description)
+        restaurantName = view.findViewById<TextView>(R.id.details_restaurant_name)
+        restaurantAddress = view.findViewById<TextView>(R.id.details_restaurant_address)
+        restaurantDescription = view.findViewById<TextView>(R.id.details_restaurant_description)
         val restaurantImage = view.findViewById<ImageView>(R.id.details_restaurant_image)
-        val tabLayout = view.findViewById<TabLayout>(R.id.details_tab_layout)
-        val viewPager = view.findViewById<ViewPager2>(R.id.details_view_pager)
-
+        tabLayout = view.findViewById<TabLayout>(R.id.details_tab_layout)
+        viewPager = view.findViewById<ViewPager2>(R.id.details_view_pager)
+        viewPager.adapter = fragmentPageAdapter
         tabLayout.addTab(tabLayout.newTab().setText("Events"))
         tabLayout.addTab(tabLayout.newTab().setText("Offers"))
-        viewPager.adapter = fragmentPageAdapter
 
         viewModel.getRestaurantById(restaurantId) {restaurant ->
             restaurantName.text = restaurant?.name
             restaurantAddress.text = restaurant?.address?.address
             restaurantDescription.text = restaurant?.description
+            if (restaurant != null) {
+                currentRestaurantName = restaurant.name
+            }
         }
+
 
         tabLayout.addOnTabSelectedListener(object: OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -107,7 +125,6 @@ class RestaurantDetailsFragment(private val restaurantId: String): Fragment(), O
                 val lat = restaurant.address.lat.toDouble() // Convert latitude String to Double
                 val lng = restaurant.address.lng.toDouble() // Convert longitude String to Double
                 val restaurantName = restaurant.name
-
                 // Create a LatLng object with the extracted latitude and longitude
                 val latLng = LatLng(lat, lng)
 

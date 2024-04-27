@@ -1,9 +1,11 @@
 package com.example.localbite.ui.user_nav_fragments
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.localbite.data.model.Restaurant
 
 class RestaurantDetailsFragmentPageAdapter(
     fragmentManager: FragmentManager,
@@ -16,7 +18,7 @@ class RestaurantDetailsFragmentPageAdapter(
     override fun createFragment(position: Int): Fragment {
         return if (position == 0) {
             //
-            EventFragment()
+            RestaurantEventListFragment()
         } else {
             //
             OfferFragment()
