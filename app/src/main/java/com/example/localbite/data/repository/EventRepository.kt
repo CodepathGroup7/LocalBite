@@ -65,4 +65,26 @@ class EventRepository {
             }
         })
     }
+
+    fun getAllEventsByRestaurantName(restaurantName: String, callback: (List<Event>) -> Unit) {
+        val database = FirebaseDatabase.getInstance()
+        val eventsRef = database.getReference("events")
+
+        eventsRef.orderByChild("restaurantName").equalTo(restaurantName).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val events = mutableListOf<Event>()
+                for (eventSnapshot in snapshot.children) {
+                    val event = eventSnapshot.getValue(Event::class.java)
+                    event?.let { events.add(it) }
+                }
+                callback(events)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Event Repository", "Error getting all events: $error")
+                callback(emptyList())
+            }
+        })
+
+    }
 }

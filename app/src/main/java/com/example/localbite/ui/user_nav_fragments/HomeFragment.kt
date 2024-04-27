@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.localbite.R
 import com.example.localbite.data.repository.EventRepository
 import com.example.localbite.data.repository.RestaurantRepository
+import com.example.localbite.data.repository.UserRepository
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -22,6 +23,7 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
     private lateinit var viewModel: CustomerViewModel
     private lateinit var restaurantRepository: RestaurantRepository
     private lateinit var eventRepository: EventRepository
+    private lateinit var userRepository: UserRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -40,7 +42,8 @@ class HomeFragment : Fragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
         eventRepository = EventRepository()
         restaurantRepository = RestaurantRepository()
-        viewModel = ViewModelProvider(this, CustomerViewModelFactory(restaurantRepository, eventRepository)).get(CustomerViewModel::class.java)
+        userRepository = UserRepository()
+        viewModel = ViewModelProvider(this, CustomerViewModelFactory(restaurantRepository, eventRepository, userRepository)).get(CustomerViewModel::class.java)
         return view
     }
 

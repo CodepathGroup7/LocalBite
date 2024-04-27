@@ -31,8 +31,9 @@
 
         <TextView
             android:id="@+id/eventDesc"
-            android:layout_width="wrap_content"
+            android:layout_width="1.5in"
             android:layout_height="wrap_content"
+            android:maxLines="2"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
