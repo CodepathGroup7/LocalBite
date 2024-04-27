@@ -150,13 +150,22 @@ List the issues you completed this sprint
 ## Completed user stories
 List the stories you completed this sprint
 - [x] Restaurants are shown as markers in the Map View
-- [x] Creating & Displaying Offers on both the Customer and Restaurant side
 - [x] Creating & Displaying Events on both the Customer and Restaurant side
 - [x] Registering for an event through Customer login
 
 List the stories that you will complete in the next sprint
+- [x] Creating & Displaying Offers on both the Customer and Restaurant side
 - [x] Push Notifications when any event or offer is published
-[Add video/gif of your current application that shows build progress] 
+[Add video/gif of your current application that shows build progress]
+
+### Restaurants are shown as markers in the Map View
+![ProjectBoard](https://github.com/CodepathGroup7/LocalBite/blob/main/DemoGif/LocalBite_Login_and_Registration.gif)
+
+### Creating & Displaying Events on both the Customer and Restaurant side
+![ProjectBoard](https://github.com/CodepathGroup7/LocalBite/blob/main/DemoGif/LocalBite_Login_and_Registration.gif)
+
+### Registering for an event through Customer login
+![ProjectBoard](https://github.com/CodepathGroup7/LocalBite/blob/main/DemoGif/LocalBite_Login_and_Registration.gif)
 
 ## App Demo Video
 Embed the YouTube/Vimeo link of your Completed Demo Day prep video
