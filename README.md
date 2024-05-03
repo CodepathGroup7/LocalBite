@@ -159,4 +159,4 @@ List the stories that you will complete in the next sprint
 [Add video/gif of your current application that shows build progress]
 
 ## App Demo Video
-![Demo Video](https://www.youtube.com/watch?v=dab1uPx5Ch8&ab_channel=SutikshV)
+![DemoVideo](https://www.youtube.com/watch?v=dab1uPx5Ch8&ab_channel=SutikshV)
