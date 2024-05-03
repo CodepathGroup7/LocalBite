@@ -160,3 +160,5 @@ List the stories that you will complete in the next sprint
 
 ## App Demo Video
 ![DemoVideo](https://www.youtube.com/watch?v=dab1uPx5Ch8&ab_channel=SutikshV)
+
+Link to the video: [Demo Video](https://www.youtube.com/watch?v=dab1uPx5Ch8&ab_channel=SutikshV)
