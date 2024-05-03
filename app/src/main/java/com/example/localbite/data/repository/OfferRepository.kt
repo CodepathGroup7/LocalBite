@@ -40,6 +40,23 @@ class OfferRepository {
         })
     }
 
+    fun getAllOffersByRestaurantId(restaurantId: String, callback: (List<Offer>) -> Unit) {
+        database.child("offers").orderByChild("restaurantId").equalTo(restaurantId).addValueEventListener( object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val offers = mutableListOf<Offer>()
+                for (offerSnapshot in snapshot.children) {
+                    val offer = offerSnapshot.getValue(Offer::class.java)
+                    offer?.let { offers.add(it) }
+                }
+                callback(offers)
+            }
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+                Log.e("OfferRepository", "Failed to retrieve offers", error.toException())
+            }
+        })
+    }
+
     fun getAllOffers(callback: (List<Offer>) -> Unit) {
         val database = FirebaseDatabase.getInstance()
         val offersRef = database.getReference("offers")

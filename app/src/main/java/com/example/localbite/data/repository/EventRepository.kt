@@ -67,10 +67,8 @@ class EventRepository {
     }
 
     fun getAllEventsByRestaurantName(restaurantName: String, callback: (List<Event>) -> Unit) {
-        val database = FirebaseDatabase.getInstance()
-        val eventsRef = database.getReference("events")
 
-        eventsRef.orderByChild("restaurantName").equalTo(restaurantName).addListenerForSingleValueEvent(object : ValueEventListener {
+        database.child("events").orderByChild("restaurantName").equalTo(restaurantName).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val events = mutableListOf<Event>()
                 for (eventSnapshot in snapshot.children) {
@@ -86,5 +84,33 @@ class EventRepository {
             }
         })
 
+    }
+
+    fun updateEvent(event: Event, callback: (Boolean) -> Unit) {
+        val eventValues = event.toMap()
+
+        val eventUpdates = hashMapOf<String, Any>(
+            "/${event.id}" to eventValues
+        )
+
+        database.child("events").updateChildren(eventUpdates)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    callback(true) // Event updated successfully
+                } else {
+                    callback(false) // Failed to update event
+                }
+            }
+    }
+
+    fun updateParticipantList(eventId: String, participantList: List<String>, callback: (Boolean) -> Unit) {
+        database.child("events").child(eventId).child("participantList").setValue(participantList)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    callback(true) // Participant list updated successfully
+                } else {
+                    callback(false) // Failed to update participant list
+                }
+            }
     }
 }

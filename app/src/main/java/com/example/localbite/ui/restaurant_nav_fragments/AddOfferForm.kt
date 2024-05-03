@@ -14,6 +14,7 @@ import com.example.localbite.data.model.Offer
 import com.example.localbite.data.repository.EventRepository
 import com.example.localbite.data.repository.OfferRepository
 import com.example.localbite.data.repository.RestaurantRepository
+import com.example.localbite.ui.NotificationService
 import com.google.firebase.auth.FirebaseAuth
 
 class AddOfferForm: Fragment() {
@@ -28,6 +29,7 @@ class AddOfferForm: Fragment() {
     private lateinit var offerAmountEditText: EditText
     private lateinit var offerCoupunCodeEditText: EditText
     private lateinit var restaurantId: String
+    private var notificationService: NotificationService = NotificationService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,11 @@ class AddOfferForm: Fragment() {
         offerRepository = OfferRepository()
         restaurantRepository = RestaurantRepository()
         viewModel = ViewModelProvider(this, RestaurantViewModelFactory(eventRepository, offerRepository, restaurantRepository)).get(RestaurantViewModel::class.java)
+        val channelId = "offer_channel"
+        val channelName = "Offer Channel"
+        val channelDescription = "Channel for offers"
+        notificationService = NotificationService()
+        context?.let { notificationService.createNotificationChannel(it, channelId, channelName, channelDescription) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,6 +99,8 @@ class AddOfferForm: Fragment() {
                 if (fragmentManager.backStackEntryCount > 0 ) {
                     fragmentManager.popBackStackImmediate()
                 }
+
+                context?.let { notificationService.sendNotification(it, "offer_channel", "New Offer", "You have a new offer!") }
             } else {
                 // Failed to add offer
                 Toast.makeText(context, "Failed to add offer", Toast.LENGTH_SHORT).show()

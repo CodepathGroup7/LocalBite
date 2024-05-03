@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -11,9 +13,6 @@
         android:text="Restaurant"
         android:textSize="22sp"
         android:padding="15dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:textStyle="bold"
         />
 
@@ -24,8 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Grand Opening!"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/restaurantName"/>
+        android:layout_below="@id/restaurantName"/>
 
     <TextView
         android:paddingStart="20dp"
@@ -34,8 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1994-09-24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/restaurantEventName"/>
+        android:layout_below="@id/restaurantEventName"/>
 
     <TextView
         android:paddingStart="20dp"
@@ -44,20 +41,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="3:00 PM"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/date"/>
+        android:layout_below="@id/date"/>
 
     <TextView
-        android:paddingStart="20dp"
-        android:layout_marginTop="20dp"
         android:id="@+id/eventSummary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:layout_marginTop="20dp"
+        android:paddingStart="20dp"
         android:text="Event Summary"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/eventTime"/>
+        android:layout_below="@id/eventTime"/>
 
     <TextView
         android:paddingStart="20dp"
@@ -65,9 +60,39 @@
         android:id="@+id/eventSummaryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Event Summary Text, here lies a new restaurant"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/eventSummary"/>
+        android:layout_below="@id/eventSummary"
+        android:text="Event Summary Text, here lies a new restaurant"/>
+
+    <Button
+        android:id="@+id/rsvp_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RSVP"
+        android:layout_below="@id/eventSummaryText"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/members_list_title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:text="Reservation List"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/eventSummaryText"
+        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/members_rv"
+        android:layout_width="409dp"
+        android:layout_height="403dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="276dp"
+        android:padding="10dp"
+        android:layout_below="@id/members_list_title_text"
+        tools:listitem="@layout/member_list_item"
+        android:visibility="gone"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

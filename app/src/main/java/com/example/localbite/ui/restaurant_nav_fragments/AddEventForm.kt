@@ -18,6 +18,7 @@ import com.example.localbite.data.model.Restaurant
 import com.example.localbite.data.repository.EventRepository
 import com.example.localbite.data.repository.OfferRepository
 import com.example.localbite.data.repository.RestaurantRepository
+import com.example.localbite.ui.NotificationService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -35,6 +36,7 @@ class AddEventForm: Fragment() {
     private lateinit var eventTimeEditText: EditText
     private lateinit var datePicker: DatePicker
     private lateinit var restaurantName: String
+    private var notificationService: NotificationService = NotificationService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,11 @@ class AddEventForm: Fragment() {
         offerRepository = OfferRepository()
         restaurantRepository = RestaurantRepository()
         viewModel = ViewModelProvider(this, RestaurantViewModelFactory(eventRepository, offerRepository, restaurantRepository)).get(RestaurantViewModel::class.java)
+        val channelId = "event_channel"
+        val channelName = "Event Channel"
+        val channelDescription = "Channel for events"
+        notificationService = NotificationService()
+        context?.let { notificationService.createNotificationChannel(it, channelId, channelName, channelDescription) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -90,9 +97,9 @@ class AddEventForm: Fragment() {
             restaurantName = restaurantName,
             eventSummary = eventDescriptionEditText.text.toString(),
             eventTime = eventTimeEditText.text.toString(),
-            eventDate = "${datePicker.month}/${datePicker.dayOfMonth}/${datePicker.year}"
+            eventDate = "${datePicker.month}/${datePicker.dayOfMonth}/${datePicker.year}",
+            participantList = emptyList<String>()
         )
-
         viewModel.addEvent(event) { success, eventId ->
             if (success) {
                 Toast.makeText(context, "Event added successfully", Toast.LENGTH_SHORT).show()
@@ -100,6 +107,9 @@ class AddEventForm: Fragment() {
                 if (fragmentManager.backStackEntryCount > 0 ) {
                     fragmentManager.popBackStackImmediate()
                 }
+
+                context?.let { notificationService.sendNotification(it, "event_channel","New Event", "A new event has been added!") }
+
             } else {
                 Toast.makeText(context, "Error Occurred: ${eventId}", Toast.LENGTH_SHORT).show()
             }

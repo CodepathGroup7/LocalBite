@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.localbite.data.model.Event
 import com.google.gson.Gson
+import java.io.Serializable
 
 class EventAdapter(eventModelList: List<Event>):
     RecyclerView.Adapter<EventAdapter.ViewHolder>() {
@@ -33,11 +34,7 @@ class EventAdapter(eventModelList: List<Event>):
             val intent = Intent(context, EventDetails::class.java)
 
             val event = eventModelList[adapterPosition]
-            intent.putExtra("restaurantName", event.restaurantName)
-            intent.putExtra("restaurantEventName", event.eventName)
-            intent.putExtra("date", event.eventDate)
-            intent.putExtra("eventTime", event.eventTime)
-            intent.putExtra("eventSummaryText", event.eventSummary)
+            intent.putExtra("id", event.id)
 
             context.startActivity(intent)
         }
