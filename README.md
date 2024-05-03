@@ -158,14 +158,5 @@ List the stories that you will complete in the next sprint
 - [x] Push Notifications when any event or offer is published
 [Add video/gif of your current application that shows build progress]
 
-### Restaurants are shown as markers in the Map View
-![ProjectBoard](https://github.com/CodepathGroup7/LocalBite/blob/main/DemoGif/LocalBite_Login_and_Registration.gif)
-
-### Creating & Displaying Events on both the Customer and Restaurant side
-![ProjectBoard](https://github.com/CodepathGroup7/LocalBite/blob/main/DemoGif/LocalBite_Login_and_Registration.gif)
-
-### Registering for an event through Customer login
-![ProjectBoard](https://github.com/CodepathGroup7/LocalBite/blob/main/DemoGif/LocalBite_Login_and_Registration.gif)
-
 ## App Demo Video
-Embed the YouTube/Vimeo link of your Completed Demo Day prep video
+![Demo Video](https://www.youtube.com/watch?v=dab1uPx5Ch8&ab_channel=SutikshV)
